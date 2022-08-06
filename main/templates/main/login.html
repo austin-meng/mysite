@@ -3,13 +3,14 @@
 {% block title %}登录{% endblock %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    
 {% endblock %}
  
  
 {% block content %}
 <div class="container">
 <div class="col-md-4 col-md-offset-4">
-  <form class='form-login' action="/main/login/" method="post">
+  <form class='form-login' action="{% url 'main:login' %}" method="post">
     {% if message %}
       <div class="alert alert-warning">{{ message }}</div>
     {% endif %}
@@ -18,12 +19,12 @@
     <h2 class="text-center">欢迎登录</h2>
 
     <div class="form-group">
-      {{ login_form.username.label_tag }}
-      {{ login_form.username}}
+      {{ form.username.label_tag }}
+      {{ form.username}}
     </div>
     <div class="form-group">
-      {{ login_form.password.label_tag }}
-      {{ login_form.password }}
+      {{ form.password.label_tag }}
+      {{ form.password }}
     </div>
 
 
@@ -32,5 +33,4 @@
   </form>
 </div>
 </div>
-<!-- /container -->
 {% endblock %}
