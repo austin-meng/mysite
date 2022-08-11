@@ -10,7 +10,6 @@ import traceback
 
 
 def index(request):
-    pass
     return render(request,'main/index.html')
  
 
@@ -38,7 +37,7 @@ def login(request):
             except Exception as e:
                 print(e)
                 traceback.print_exc()
-                message = "用户不存在！"
+                message = "登录失败"
         return render(request, 'main/login.html', locals())
     return render(request, 'main/login.html', locals())
 

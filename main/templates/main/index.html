@@ -1,6 +1,42 @@
 {% extends 'base.html' %}
 {% block title %}主页{% endblock %}
-{% block content %}
-    <h1>欢迎回来！</h1>
+
+{% block head_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.css" type="text/css">
+<style>
+  .map {
+    height: 90%;
+    width: 100%;
+  }
+</style>
 {% endblock %}
 
+
+
+{% block head_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js"></script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div id="map" class="map"></div>
+  </div>
+{% endblock %}
+
+{% block body_js %}
+<script type="text/javascript">
+  var map = new ol.Map({
+      target: 'map',
+      layers: [
+      new ol.layer.Tile({
+          source: new ol.source.OSM()
+      })
+      ],
+      view: new ol.View({
+      center: ol.proj.fromLonLat([37.41, 8.82]),
+      zoom: 4
+      })
+  });
+</script>
+{% endblock %}

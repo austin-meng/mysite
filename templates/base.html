@@ -18,7 +18,9 @@
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    {% block css %}{% endblock %}
+    {% block head_css %}{% endblock %}
+    {% block head_js %}{% endblock %}
+    
   </head>
   <body>
     {#% block navbar %}{% endblock %#}
@@ -38,6 +40,7 @@
    
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="my-nav">
+            {% if request.user.is_authenticated %}
             <ul class="nav navbar-nav">
               <li class="active"><a href="{% url 'main:index' %}">主页</a></li>
               <li class=""><a href="#">iOS</a></li>
@@ -58,11 +61,16 @@
                 </ul>
               </li>
             </ul>
+            {% endif %}
 
             <ul class="nav navbar-nav navbar-right">
+              {% if request.user.is_authenticated %}
+              <li><span class="sr-only">username</span></li>
+              <li><a href="{% url 'main:logout' %}">退出</a></li>
+              {% else %}
               <li><a href="{% url 'main:login' %}">登录</a></li>
               <li><a href="{% url 'main:register' %}">注册</a></li>
-              <li><a href="{% url 'main:logout' %}">退出</a></li>
+              {% endif %}
             </ul>
 
           </div>
@@ -70,11 +78,13 @@
       </nav>
 
     {% block content %}{% endblock %}
- 
- 
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'bootstrap-3.4.1-dist/js/bootstrap.min.js' %}"></script>
+
+    {% block body_js %}{% endblock %}
+
   </body>
 </html>
