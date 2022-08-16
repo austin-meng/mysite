@@ -143,7 +143,4 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# FORCE_SCRIPT_NAME = '/mysite'
 # LOGIN_URL = '/polls/login/'
-
-# LOGIN_REDIRECT_URL = "/"
