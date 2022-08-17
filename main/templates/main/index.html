@@ -26,17 +26,66 @@
 
 {% block body_js %}
 <script type="text/javascript">
+const key = 'get_your_own_D6rA4zTHduk6KOKTXzGB';
+const attributions =
+  '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> ' +
+  '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
+
+  const source = new ol.source.Vector({wrapX: false});
+
+const vector = new ol.layer.Vector({
+  source: source,
+});
+
   var map = new ol.Map({
       target: 'map',
       layers: [
-      new ol.layer.Tile({
-          source: new ol.source.OSM()
-      })
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+        }),
+        new ol.layer.Tile({
+          source: new ol.source.XYZ({
+            attributions: attributions,
+            url: 'https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=' + key,
+            maxZoom: 20,
+          }),
+        }),
+        vector,
       ],
       view: new ol.View({
       center: ol.proj.fromLonLat([37.41, 8.82]),
       zoom: 4
       })
   });
+
+
+  const typeSelect = "Point";
+
+let draw; // global so we can remove it later
+function addInteraction() {
+  const value = typeSelect;
+  if (value !== 'None') {
+    draw = new Draw({
+      source: source,
+      type: typeSelect,
+    });
+    map.addInteraction(draw);
+  }
+}
+
+/**
+ * Handle change event.
+ */
+typeSelect.onchange = function () {
+  map.removeInteraction(draw);
+  addInteraction();
+};
+
+document.getElementById('undo').addEventListener('click', function () {
+  draw.removeLastPoint();
+});
+
+addInteraction();
+
 </script>
 {% endblock %}
